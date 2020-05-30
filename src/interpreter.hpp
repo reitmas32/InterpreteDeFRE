@@ -22,7 +22,7 @@ public:
 
     bool runInstruction();
 
-    void runCode(std::map<std::string, int> dataIn);
+    void runCode();
 
-    void runCodeDebug(std::map<std::string, int> dataIn);
+    void runCodeDebug();
 };
