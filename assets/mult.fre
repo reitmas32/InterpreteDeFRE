@@ -1,0 +1,11 @@
+X0 G A
+X2 G END
+A X1 G B
+X2 G END
+
+A X1 G B
+X2 G END
+B X1 D
+X0 I
+X3 G A
+END X4 I
