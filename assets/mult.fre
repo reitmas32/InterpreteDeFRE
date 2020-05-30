@@ -1,11 +1,15 @@
-X0 G A
-X2 G END
-A X1 G B
-X2 G END
-
-A X1 G B
-X2 G END
-B X1 D
-X0 I
-X3 G A
-END X4 I
+Y0 <- 3
+Y1 <- 2
+Y5 <- 1
+Y6 <- 1
+Y7 <- 1
+A Y0 G B
+Y5 G CMP
+B Y1 D
+Y0 D
+Y5 G A
+CMP Y1 G L
+X0 <- 1
+Y5 G END
+L X0 <- 0
+END X2 <- 0

@@ -4,28 +4,21 @@
 
 int main(int argc, char const *argv[])
 {
-    
-    Interpreter interpreter = Interpreter();
 
+    Interpreter interpreter = Interpreter();
     //Leemos el Programa
-    interpreter.readCode("../assets/resta.fre");
+    interpreter.readCode("../assets/mult.fre");
     ///Datos de entrada Suma
     std::map<std::string, int> dataIn;
-    dataIn["X0"] = 39;
-    dataIn["X1"] = 2;
-    dataIn["X2"] = 1;
-    dataIn["X3"] = 1;
-    dataIn["X4"] = 1;
-
     if (*argv[1] == 'R')
     {
         //Ejecutamos el Programa
-        interpreter.runCode(dataIn);
+        interpreter.runCode();
     }
     else if (*argv[1] == 'D')
     {
         //Ejecutamos el Programa en modo Debug
-        interpreter.runCodeDebug(dataIn);
+        interpreter.runCodeDebug();
     }
 
     std::cout << '\n';
