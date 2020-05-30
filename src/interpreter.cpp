@@ -44,15 +44,14 @@ bool Interpreter::readCode(std::string file)
     std::string line;
     std::ifstream source(file);
     Instruction tmpInstruct;
-
+    this->ip = 0;
     if (source.is_open())
     {
-
         while (getline(source, line))
         {
             tmpInstruct = Instruction(line);
-            std::cout << "IP: " << this->ip << '\n';
-            tmpInstruct.Print();
+            //std::cout<<"IP: "<<this->ip;
+            //tmpInstruct.Print();
             if (tmpInstruct.label != "")
             {
                 this->labels[tmpInstruct.label] = this->ip;
@@ -72,55 +71,7 @@ bool Interpreter::readCode(std::string file)
 
 bool Interpreter::runInstruction()
 {
-
     Instruction instruction = this->code[this->ip];
-    if (instruction.operation == "I")
-    {
-        this->data[instruction.operands[0]] = this->data[instruction.operands[0]] + 1;
-        this->ip++;
-    }
-    else if (instruction.operation == "D")
-    {
-        if (this->data[instruction.operands[0]] != 0)
-            this->data[instruction.operands[0]] = this->data[instruction.operands[0]] - 1;
-        this->ip++;
-    }
-    else if (instruction.operation == "<-")
-    {
-        for (auto c : instruction.operands[1])
-        {
-            if (c == '[')
-            {
-                std::string op;
-                for (size_t i = 1; i < instruction.operands[1].size() - 1; i++)
-                {
-                    op += instruction.operands[1][i];
-                }
-                this->data[instruction.operands[0]] = this->data[op];
-                break;
-            }
-            else
-            {
-                this->data[instruction.operands[0]] = stoi(instruction.operands[1]);
-            }
-        }
-
-        this->ip++;
-    }
-    else if (instruction.operation == "G")
-    {
-        if (this->data[instruction.operands[0]] != 0)
-        {
-
-            this->ip = this->labels[instruction.operands[1]];
-        }
-        else
-        {
-            this->ip++;
-        }
-    }
-
-    /*
     switch (instruction.type)
     {
     case Instructions::Inc:
@@ -159,35 +110,35 @@ bool Interpreter::runInstruction()
     default:
         break;
     }
-    */
     return true;
 }
 
-void Interpreter::runCode()
+void Interpreter::runCode(std::map<std::string, int> dataIn)
 {
-
+    for (auto v : dataIn)
+    {
+        this->data[v.first] = v.second;
+    }
     this->ip = 0;
-
     while (this->code[this->ip].label != "END")
     {
         this->runInstruction();
     }
+
 }
 
-void Interpreter::runCodeDebug()
+void Interpreter::runCodeDebug(std::map<std::string, int> dataIn)
 {
-
+    for (auto v : dataIn)
+    {
+        this->data[v.first] = v.second;
+    }
     this->ip = 0;
-
     while (this->code[this->ip].label != "END")
     {
-        std::cout << "IP: " << this->ip << " ";
-        for (std::string i : this->code[this->ip].code)
-        {
-            std::cout << i << ' ';
-        }
-        std::cout << '\n';
+        std::cout<<"IP: "<<this->ip<<" "<<this->code[this->ip].instruc<<'\n';
         this->runInstruction();
         std::getchar();
     }
+
 }

@@ -4,7 +4,6 @@
 #include <vector>
 
 #define LEN_INSTUCTION 4
-#define NUM_OPERANDS_MAX 2
 
 enum class Instructions{
     l_Inc,
@@ -20,14 +19,14 @@ enum class Instructions{
 class Instruction
 {
 public:
-    inline static std::vector<std::string> operators {"G", "I", "<-", "D"}; 
 
-    uint8_t find_operator();
-
-    std::vector<std::string> code ;
-    std::vector<std::string> operands;
-    std::string operation{""};
     std::string label {""};
+    std::string var {""};
+    std::string gotoLabel {""};
+    std::string operation {""};
+    int val;
+    std::string instruc;
+    Instructions type;
 
     Instruction(){}
     Instruction(std::string instruction);

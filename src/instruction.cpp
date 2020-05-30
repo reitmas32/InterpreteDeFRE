@@ -4,24 +4,9 @@
 
 Instruction::Instruction(std::string instruction)
 {
-    this->code = this->decodeInstruction(instruction);
+    this->instruc = instruction;
+    std::vector<std::string> codeInstruction = this->decodeInstruction(instruction);
 
-    uint8_t index = this->find_operator();
-    
-
-    if(this->operation == "I" || this->operation == "D"){
-        this->operands.emplace_back(this->code[index - 1]);
-    }else if(this->operation == "<-" || this->operation == "G")
-    {
-        this->operands.emplace_back(this->code[index - 1]);
-        this->operands.emplace_back(this->code[index + 1]);
-    }
-    
-    if(index > 1 ){
-        this->label = this->code[index - 2];
-    }
-
-/*
     if (codeInstruction.size() == 2)
     {
         this->var = codeInstruction[0];
@@ -57,9 +42,8 @@ Instruction::Instruction(std::string instruction)
     {
         std::cout << "Error Instruction: incomplete instruction" << '\n';
     }
-    */
 }
-/*
+
 bool Instruction::getTypeInstruction()
 {
     if (this->label == "")
@@ -102,7 +86,7 @@ bool Instruction::getTypeInstruction()
     }
     return true;
 }
-*/
+
 std::vector<std::string> Instruction::decodeInstruction(std::string instuction)
 {
     std::vector<std::string> codeInstruction;
@@ -130,31 +114,10 @@ std::vector<std::string> Instruction::decodeInstruction(std::string instuction)
 }
 
 void Instruction::Print(){
-    std::cout<<"instruction: ";
-    for (std::string i : this->code) { std::cout<< i<<' '; }
-    std::cout<<'\n';
-
+    std::cout<<"instruction: "<<this->instruc<<'\n';
     std::cout<<"Label: "<<this->label<<'\n';
+    std::cout<<"var: "<<this->var<<'\n';
     std::cout<<"operation: "<<this->operation<<'\n';
-    std::cout<<"operands: ";
-    for (std::string i : this->operands) { std::cout<< i<<' '; }
+    std::cout<<"gotoLabel: "<<this->gotoLabel<<'\n';
     std::cout<<'\n';
-
-    std::cout<<'\n';
-}
-
-uint8_t Instruction::find_operator(){   
-    for (std::size_t i = 0; i < this->code.size(); i++)
-    {
-        std::string op = this->code[i];
-        for (std::string op_s : operators)
-        {
-            if(op == op_s){
-                this->operation = op;
-                return i;
-            }
-        }
-        
-    }
-    return 0;
 }
