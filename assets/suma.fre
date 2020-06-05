@@ -1,11 +1,9 @@
-X2 <- 1
-X3 <- 1
-X4 <- 1
+Z1 <- 1
 X0 <- 5
-X1 <- [X0]
+X1 <- 9
 A X1 G B
-X2 G END
+Z1 G END
 B X1 D
 X0 I
-X3 G A
-END X4 I
+Z1 G A
+END Z1 <- 1

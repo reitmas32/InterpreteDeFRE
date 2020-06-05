@@ -25,4 +25,6 @@ public:
     void runCode();
 
     void runCodeDebug();
+
+    void PrintData();
 };

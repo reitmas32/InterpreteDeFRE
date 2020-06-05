@@ -158,3 +158,9 @@ uint8_t Instruction::find_operator(){
     }
     return 0;
 }
+
+void Instruction::PrintCode( short x, short y ){
+    gotoxy(x, y);
+    for (std::string i : this->code) { std::cout<< i<<' '; }
+    std::cout<<'\n';
+}

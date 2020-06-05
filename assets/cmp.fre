@@ -1,15 +1,27 @@
-Y0 <- 3
+//Asignacion de Variables
+Y0 <- 5
 Y1 <- 2
 Y5 <- 1
 Y6 <- 1
 Y7 <- 1
+
+//Bucle de decremento
 A Y0 G B
 Y5 G CMP
 B Y1 D
 Y0 D
 Y5 G A
+
+
+//Comparacion
 CMP Y1 G L
+
+// Y0 >= Y1
 X0 <- 1
 Y5 G END
+
+// Y0 < Y1
 L X0 <- 0
-END X2 <- 0
+
+//Salir
+END X6 <- 1

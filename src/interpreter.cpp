@@ -50,9 +50,9 @@ bool Interpreter::readCode(std::string file)
 
         while (getline(source, line))
         {
+            if ((line[0] == '/' && line[1] == '/' )|| line[0] == NULL)
+                continue;
             tmpInstruct = Instruction(line);
-            std::cout << "IP: " << this->ip << '\n';
-            tmpInstruct.Print();
             if (tmpInstruct.label != "")
             {
                 this->labels[tmpInstruct.label] = this->ip;
@@ -168,7 +168,7 @@ void Interpreter::runCode()
 
     this->ip = 0;
 
-    while (this->code[this->ip].label != "END")
+    while (this->code[this->ip].operation != "")
     {
         this->runInstruction();
     }
@@ -176,18 +176,51 @@ void Interpreter::runCode()
 
 void Interpreter::runCodeDebug()
 {
+    int y = 3;
+    for (auto i : this->code)
+    {
+        i.second.PrintCode(6, y);
+        y++;
+    }
 
     this->ip = 0;
-
-    while (this->code[this->ip].label != "END")
+    
+    while (this->code[this->ip].operation != "")
     {
+        y = 0;
+        gotoxy(30, 3);
         std::cout << "IP: " << this->ip << " ";
-        for (std::string i : this->code[this->ip].code)
+        for (auto i : this->code)
         {
-            std::cout << i << ' ';
+            gotoxy(1, y + 3);
+            std::cout<<"  "<<y<< ":";
+            y++;
         }
+        gotoxy(1, this->ip + 3);
+        std::cout << ">";
+        //this->code[this->ip].PrintCode(5,5);
         std::cout << '\n';
+        this->PrintData();
         this->runInstruction();
         std::getchar();
+    }
+}
+
+void Interpreter::PrintData()
+{
+    short y = 3;
+    short x = 0;
+    for (auto d : this->data)
+    {
+        gotoxy(55 + x * 10, y);
+        std::cout << d.first << ": " << d.second;
+
+        y += 2;
+
+        if (y >= 23)
+        {
+            y = 3;
+            x++;
+        }
     }
 }

@@ -3,6 +3,7 @@
         "array": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
+        "*.fre":"go",
         "*.tcc": "cpp",
         "cctype": "cpp",
         "clocale": "cpp",
