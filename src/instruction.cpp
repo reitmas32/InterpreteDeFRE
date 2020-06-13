@@ -1,141 +1,85 @@
 #include <iostream>
 
-#include <instruction.hpp>
+#include "instruction.hpp"
 
 Instruction::Instruction(std::string instruction)
 {
+    //Decodifica la instruccion 
     this->code = this->decodeInstruction(instruction);
 
+    //Busca que operador tiene la instruccion
     uint8_t index = this->find_operator();
     
-
+    //Si el operador es de incremento o decremento
+    //almacenamos el operando anterior en la lista de operandos
     if(this->operation == "I" || this->operation == "D"){
         this->operands.emplace_back(this->code[index - 1]);
-    }else if(this->operation == "<-" || this->operation == "G")
+    }
+    //Si el operador es de asignacion o salto
+    //almacenamos el operando anterior y el sigueinte en la lista de operandos
+    else if(this->operation == "<-" || this->operation == "G")
     {
         this->operands.emplace_back(this->code[index - 1]);
         this->operands.emplace_back(this->code[index + 1]);
     }
     
+    //Si la instruccion tiene etiqueta la almacenamos en label
     if(index > 1 ){
         this->label = this->code[index - 2];
     }
 
-/*
-    if (codeInstruction.size() == 2)
-    {
-        this->var = codeInstruction[0];
-        this->operation = codeInstruction[1];
-        this->getTypeInstruction();
-    }
-    else if (codeInstruction.size() == 3)
-    {
-        if (codeInstruction[1] == "G")
-        {
-            this->var = codeInstruction[0];
-            this->operation = codeInstruction[1];
-            this->gotoLabel = codeInstruction[2];
-            this->getTypeInstruction();
-        }
-        else
-        {
-            this->label = codeInstruction[0];
-            this->var = codeInstruction[1];
-            this->operation = codeInstruction[2];
-            this->getTypeInstruction();
-        }
-    }
-    else if (codeInstruction.size() == 4)
-    {
-        this->label = codeInstruction[0];
-        this->var = codeInstruction[1];
-        this->operation = codeInstruction[2];
-        this->gotoLabel = codeInstruction[3];
-        this->getTypeInstruction();
-    }
-    else
-    {
-        std::cout << "Error Instruction: incomplete instruction" << '\n';
-    }
-    */
 }
-/*
-bool Instruction::getTypeInstruction()
-{
-    if (this->label == "")
-    {
-        if (this->operation == "I")
-        {
-            this->type = Instructions::Inc;
-        }
-        else if (this->operation == "D")
-        {
-            this->type = Instructions::Dec;
-        }
-        else if (this->operation == "G")
-        {
-            this->type = Instructions::Goto;
-        }
-        else
-        {
-            std::cout << "Error Instruction: incomplete instruction" << '\n';
-        }
-    }
-    else
-    {
-        if (this->operation == "I")
-        {
-            this->type = Instructions::l_Inc;
-        }
-        else if (this->operation == "D")
-        {
-            this->type = Instructions::l_Dec;
-        }
-        else if (this->operation == "G")
-        {
-            this->type = Instructions::l_Goto;
-        }
-        else
-        {
-            std::cout << "Error Instruction: incomplete instruction" << '\n';
-        }
-    }
-    return true;
-}
-*/
+
+
 std::vector<std::string> Instruction::decodeInstruction(std::string instuction)
 {
     std::vector<std::string> codeInstruction;
     std::string labelTmp = "";
-
     codeInstruction.reserve(LEN_INSTUCTION);
 
+    //para cada caracter de la instruccion
     for (auto c : instuction)
     {
+        //Si el caracter no es el ' '
+        //significa que no se leyo un atomo de la instruccion completo
         if (c != ' ')
         {
+            //Guardamos el c en labelTmp
             labelTmp.push_back(c);
         }
         else
         {
+            //Guadomos el atomo en el codigo de la instruccion
             codeInstruction.push_back(labelTmp);
+
+            //Borramos labelTmp
             labelTmp.erase();
         }
     }
 
+    //Guadamos el ultimo atomo
     codeInstruction.push_back(labelTmp);
+
+    //Borramos labelTmp
     labelTmp.erase();
 
+    //REgrsamos el codigo de la instruccion
     return codeInstruction;
 }
 
 void Instruction::Print(){
+    //Impriminos la instruccion
     std::cout<<"instruction: ";
     for (std::string i : this->code) { std::cout<< i<<' '; }
     std::cout<<'\n';
 
+    //Imprimimos su etiqueta 
     std::cout<<"Label: "<<this->label<<'\n';
+
+    //Imprimimos su operacion
     std::cout<<"operation: "<<this->operation<<'\n';
+
+    //IMprimimos sus operandos
     std::cout<<"operands: ";
     for (std::string i : this->operands) { std::cout<< i<<' '; }
     std::cout<<'\n';
@@ -143,10 +87,13 @@ void Instruction::Print(){
     std::cout<<'\n';
 }
 
-uint8_t Instruction::find_operator(){   
+uint8_t Instruction::find_operator(){  
+
+    //para cada caracter de la instriccion 
     for (std::size_t i = 0; i < this->code.size(); i++)
     {
         std::string op = this->code[i];
+        //Buscamos algun operador de los operandos
         for (std::string op_s : operators)
         {
             if(op == op_s){
@@ -160,7 +107,10 @@ uint8_t Instruction::find_operator(){
 }
 
 void Instruction::PrintCode( short x, short y ){
+    //Colocamos el cursor en pantalla
     gotoxy(x, y);
+
+    //impimicos el codigo de la instruccion
     for (std::string i : this->code) { std::cout<< i<<' '; }
     std::cout<<'\n';
 }

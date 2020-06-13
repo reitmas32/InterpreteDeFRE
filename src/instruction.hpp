@@ -6,17 +6,6 @@
 #define LEN_INSTUCTION 4
 #define NUM_OPERANDS_MAX 2
 
-enum class Instructions{
-    l_Inc,
-    l_Dec,
-    l_Goto,
-    Inc,
-    Dec,
-    Goto,
-    Asig,
-    l_Asig
-};
-
 /**!< Funcion para controlar el cursor*/
 static void gotoxy( short x, short y ){
 	printf("%c[%d;%df",0x1B, y, x );
@@ -42,16 +31,32 @@ public:
      * @param instruction 
      */
     Instruction(std::string instruction);
+
+    /**
+     * @brief Destroy the Instruction object
+     * 
+     */
     ~Instruction(){}
 
     /**
-     * @brief 
+     * @brief decodifica la instruccion que se le pase como parametro
      * 
      * @param instruction 
      * @return std::vector<std::string> 
      */
     std::vector<std::string> decodeInstruction(std::string instruction);
-    bool getTypeInstruction();
+
+    /**
+     * @brief Imprime la instruciion
+     * 
+     */
     void Print();
+
+    /**
+     * @brief Imprime el codigo de la instruccion en una coordenada especifica en pantalla
+     * 
+     * @param x 
+     * @param y 
+     */
     void PrintCode( short x, short y );
 };
