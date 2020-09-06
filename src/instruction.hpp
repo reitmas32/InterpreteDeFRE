@@ -7,7 +7,7 @@
 #define NUM_OPERANDS_MAX 2
 
 /**!< Funcion para controlar el cursor*/
-static void gotoxy( short x, short y ){
+inline static void gotoxy( short x, short y ){
 	printf("%c[%d;%df",0x1B, y, x );
 }
 

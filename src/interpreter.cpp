@@ -52,7 +52,7 @@ bool Interpreter::readCode(std::string file)
         while (getline(source, line))
         {
             //Busca los comentarios y salto de linea
-            if ((line[0] == '/' && line[1] == '/' )|| line[0] == NULL)
+            if ((line[0] == '/' && line[1] == '/' )|| !line[0])
                 continue;
             
             //Crea una instruccion de cada linae
